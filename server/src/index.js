@@ -32,6 +32,8 @@ const corsOptions = {
     if (allowList.includes(origin)) return cb(null, true);
     if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return cb(null, true);
     if (/\.vercel\.app$/.test(new URL(origin).hostname)) return cb(null, true);
+    // Single-service deploy: frontend + backend share the same Render origin.
+    if (/\.onrender\.com$/.test(new URL(origin).hostname)) return cb(null, true);
     return cb(new Error(`Origin ${origin} not allowed by CORS`));
   },
   credentials: true,
