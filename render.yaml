@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: igl-portal
+    runtime: node
+    plan: free
+    # Single service: build the React frontend, then install the backend.
+    # The Express server serves client/dist AND the /api routes from one URL.
+    buildCommand: cd client && npm install && npm run build && cd ../server && npm install
+    startCommand: cd server && npm start
+    autoDeploy: true
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: NODE_ENV
+        value: production
