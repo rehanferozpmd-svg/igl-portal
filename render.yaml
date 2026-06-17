@@ -5,7 +5,8 @@ services:
     plan: free
     # Single service: build the React frontend, then install the backend.
     # The Express server serves client/dist AND the /api routes from one URL.
-    buildCommand: cd client && npm install && npm run build && cd ../server && npm install
+    # --include=dev: NODE_ENV=production would otherwise skip vite (a devDependency) and the build fails.
+    buildCommand: cd client && npm install --include=dev && npm run build && cd ../server && npm install
     startCommand: cd server && npm start
     autoDeploy: true
     envVars:
